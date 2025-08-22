@@ -39,10 +39,11 @@ const Button: FC<ButtonProps> = ({
         leading-4
         focus:outline-none
         focus:ring-2
-        focus:ring-blue-500
+        focus:ring-primary-dark
         focus:ring-offset-2
         disabled:opacity-50
         disabled:cursor-not-allowed
+        cursor-pointer
         ${className}
       `}
       {...props}

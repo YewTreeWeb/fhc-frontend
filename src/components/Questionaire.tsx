@@ -20,6 +20,8 @@ const Questionaire = ({ questions, loading = true, user, ...props }: Props) => {
   const [answers, setAnswers] = useState<AnswerProps>([]);
   const [finished, setFinished] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [error, setError] = useState(false);
+  const [completed, setCompleted] = useState(false);
 
   /**
    * Calculates the completion percentage of the questionnaire based on answered questions
@@ -28,8 +30,11 @@ const Questionaire = ({ questions, loading = true, user, ...props }: Props) => {
   function calculatePercentage() {
     const completionPercentage = Math.round(
       (answers.length / questionList.length) * 100
-    );
-    setProgress(Number(completionPercentage.toFixed(0)));
+    ).toFixed();
+    const percentage = isNaN(Number(completionPercentage))
+      ? 0
+      : completionPercentage;
+    setProgress(Number(percentage));
   }
 
   /**
@@ -74,13 +79,26 @@ const Questionaire = ({ questions, loading = true, user, ...props }: Props) => {
     calculatePercentage();
     sessionStorage.setItem('answers', JSON.stringify({ answers, finished }));
     if (finished && answers.length > 0) {
-      const data = answers.map((answer) => {
-        return {
-          questionId: answer.id,
-          answer: answer.score,
-        };
-      });
-      axios.post(`https://fhc-api.onrender.com/submissions?user=${user}`, data);
+      setError(false);
+      const data = {
+        answers: answers.map((answer) => {
+          return {
+            questionId: answer.id,
+            answer: answer.score,
+          };
+        }),
+      };
+      console.log('🚀 ~ Questionaire ~ data:', data);
+      axios
+        .post(`https://fhc-api.onrender.com/submissions?user=${user}`, data)
+        .then((res) => {
+          console.log(res);
+          setCompleted(true);
+        })
+        .catch(() => {
+          console.error(error);
+          setError(true);
+        });
     }
   }, [answers, finished]);
 
@@ -90,42 +108,67 @@ const Questionaire = ({ questions, loading = true, user, ...props }: Props) => {
         <h3 className="font-bold">Your progress - {progress}%</h3>
         <div></div>
       </header>
-      <main role="main" aria-label="Career Assessment Questionnaire" {...props}>
-        <form
-          onSubmit={() => setFinished(true)}
+      <main
+        role="main"
+        aria-label="Career Assessment Questionnaire"
+        className="flex flex-col"
+        {...props}
+      >
+        <div
+          className="h-[30.0625rem] overflow-y-scroll snap-y snap-mandatory"
+          role="form"
           aria-label={`Questionnaire with ${questionList.length} questions`}
           aria-live="polite"
         >
-          <div className="h-[30.0625rem] overflow-scroll flex flex-col items-center justify-center m-auto px-20">
-            {questionList.map((question, i) => {
-              const existingAnswer = answers.find(
-                (answer) => answer.id === question.id
-              );
+          {questionList.map((question, i) => {
+            const existingAnswer = answers.find(
+              (answer) => answer.id === question.id
+            );
 
-              return (
-                <Question
-                  key={question.id}
-                  {...question}
-                  total={questionList.length}
-                  number={i + 1}
-                  answer={(score: number) => {
-                    setAnswers([...answers, { score, id: question.id }]);
-                  }}
-                  initialValue={existingAnswer?.score}
-                />
-              );
-            })}
-          </div>
-          {answers.length === questionList.length && (
-            <Button type="submit" size="sm" onClick={() => setFinished(true)}>
-              Finish
-            </Button>
+            return (
+              // To fix: Questions are not being properly contained
+              // Use slider for better implementation and check height properties
+              <Question
+                key={question.id}
+                {...question}
+                total={questionList.length}
+                number={i + 1}
+                answer={(score: number) => {
+                  const updatedAnswers = answers.filter(
+                    (answer) => answer.id !== question.id
+                  );
+                  setAnswers([...updatedAnswers, { score, id: question.id }]);
+                }}
+                initialValue={existingAnswer?.score}
+              />
+            );
+          })}
+          {!loading && answers.length === questionList.length && (
+            <div className="h-[30.0625rem] flex items-center justify-center snap-start">
+              <Button size="sm" onClick={() => setFinished(true)}>
+                Finish
+              </Button>
+              {error && (
+                <p className="text-md text-red-700">
+                  There was an issue when submitting your answers. Please try
+                  again.
+                </p>
+              )}
+            </div>
           )}
-        </form>
+        </div>
         {loading && (
           <div role="status" aria-live="polite" aria-label="Loading status">
-            <p>Loading your personalized career assessment...</p>
+            <p className="font-bold text-base">
+              Loading your personalized career assessment...
+            </p>
           </div>
+        )}
+        {/* Add banner, button and styling */}
+        {completed && (
+          <dialog>
+            <h2>Completed</h2>
+          </dialog>
         )}
       </main>
     </div>

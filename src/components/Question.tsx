@@ -42,7 +42,7 @@ const Question = ({
   return (
     <div
       id={questionId}
-      className={`min-h-[30.0625rem] flex flex-col justify-center px-8 py-10 bg-white ${className}`}
+      className={`h-[30.0625rem] flex flex-col justify-center px-8 py-10 bg-white snap-start flex-shrink-0 ${className}`}
       role="group"
       aria-labelledby={`${questionId}-title`}
       aria-describedby={`${questionId}-text`}
@@ -51,7 +51,7 @@ const Question = ({
       <div className="max-w-2xl mx-auto text-center">
         <h3
           id={`${questionId}-title`}
-          className="text-2xl font-semibold text-gray-800 mb-6"
+          className="text-2xl font-semibold mb-6 text-primary"
         >
           Question {number} of {totalAmount}
         </h3>
@@ -80,26 +80,32 @@ const Question = ({
             <label
               key={value}
               className="flex flex-col items-center cursor-pointer group"
+              onClick={(e) => {
+                e.preventDefault();
+                handleAnswerChange(value);
+              }}
             >
               <input
                 type="radio"
                 name={questionId}
                 value={value}
                 checked={selectedValue === value}
-                onChange={() => handleAnswerChange(value)}
+                onChange={() => {}} // Controlled by onClick
+                onFocus={(e) => e.target.blur()} // Immediately blur to prevent focus scrolling
                 aria-describedby={`${questionId}-scale-labels`}
                 aria-label={`Rating ${value} out of 8`}
                 className="sr-only"
+                tabIndex={-1} // Remove from tab order to prevent focus
               />
               <span
                 className={`
-                w-10 h-10 rounded-full border-2 flex items-center justify-center text-sm font-medium transition-all duration-200
+                w-12 h-12 rounded-full border-2 flex items-center justify-center text-lg font-medium transition-all duration-200 cursor-pointer
                 ${
                   selectedValue === value
-                    ? 'bg-primary text-white border-primary'
-                    : 'bg-white text-gray-600 border-gray-300 hover:border-primary hover:text-primary'
+                    ? 'bg-primary text-white border-primary shadow-lg'
+                    : 'bg-white text-gray-600 border-gray-300 hover:border-primary-dark hover:text-primary-dark hover:shadow-md'
                 }
-                group-focus-within:ring-2 group-focus-within:ring-primary group-focus-within:ring-offset-2
+                group-focus-within:ring-4 group-focus-within:ring-blue-200
               `}
                 aria-hidden="true"
               ></span>

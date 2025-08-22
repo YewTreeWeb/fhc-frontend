@@ -5,3 +5,37 @@
   --color-primary: hsl(25, 92%, 62%);
   --color-primary-dark: hsl(26, 77%, 55%);
 }
+
+/* Smooth scroll behavior for questionnaire */
+.snap-y {
+  scroll-behavior: smooth;
+}
+
+/* Smooth scroll behavior for questionnaire */
+.snap-y {
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+  /* Ensure the container maintains its height */
+  flex-shrink: 0;
+  min-height: 0; /* Allow flex items to shrink below content size */
+}
+
+/* Prevent scroll on radio button focus and interaction */
+input[type='radio'] {
+  scroll-margin: 0 !important;
+}
+
+input[type='radio']:focus {
+  scroll-margin: 0 !important;
+  outline: none;
+}
+
+/* Prevent any focus-related scrolling in the questionnaire container */
+.snap-y * {
+  scroll-margin: 0 !important;
+}
+
+/* Ensure labels don't cause scrolling */
+label {
+  scroll-margin: 0 !important;
+}
