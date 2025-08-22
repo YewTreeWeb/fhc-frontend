@@ -42,25 +42,27 @@ const Question = ({
   return (
     <div
       id={questionId}
-      className={`p-6 bg-white h-[512px] ${className}`}
+      className={`min-h-[30.0625rem] flex flex-col justify-center px-8 py-10 bg-white ${className}`}
       role="group"
       aria-labelledby={`${questionId}-title`}
       aria-describedby={`${questionId}-text`}
       {...props}
     >
-      <h3
-        id={`${questionId}-title`}
-        className="text-lg font-semibold text-gray-800 mb-4"
-      >
-        Question {number} of {totalAmount}
-      </h3>
+      <div className="max-w-2xl mx-auto text-center">
+        <h3
+          id={`${questionId}-title`}
+          className="text-2xl font-semibold text-gray-800 mb-6"
+        >
+          Question {number} of {totalAmount}
+        </h3>
 
-      <p
-        className="text-gray-700 mb-6 leading-relaxed"
-        id={`${questionId}-text`}
-      >
-        {text}
-      </p>
+        <p
+          className="text-xl text-gray-700 mb-12 leading-relaxed"
+          id={`${questionId}-text`}
+        >
+          {text}
+        </p>
+      </div>
 
       <fieldset className="border-0 p-0 m-0">
         <legend className="sr-only">
