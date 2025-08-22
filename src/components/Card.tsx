@@ -11,7 +11,7 @@ const Card = ({
   return (
     <div
       key={title}
-      className={`border rounded-lg p-4 shadow-sm ${className}`.trim()}
+      className={`border border-black/20 rounded-lg p-4 shadow-md relative ${className}`.trim()}
       {...props}
     >
       <img src={icon.src} alt={icon.alt || ''} className="w-12 h-12 mb-3" />

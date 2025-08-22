@@ -27,3 +27,15 @@ export interface ButtonProps extends ComponentProps<'button'> {
   loading?: boolean;
   size: 'sm' | 'md' | 'lg';
 }
+
+export interface QuestionProps {
+  text: string;
+  id: string;
+}
+
+export interface QuestionList {
+  ok: boolean;
+  user: string;
+  questions: QuestionProps[];
+}
+[];

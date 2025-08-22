@@ -1,29 +1,46 @@
-import { useState } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import Button from './components/Button';
 import CardWrapper from './components/CardWrapper';
 import Header from './components/Header';
-import Questions from './components/Questions';
-import { useApi } from './hooks/useApi';
+import Questionaire from './components/Questionaire';
+import type { QuestionList } from './types';
 
 function App() {
   const [startTest, setStartTest] = useState(false);
   const [user, setUser] = useState('');
 
-  //   const {
-  //     data: subData,
-  //     error: subError,
-  //     isLoading: subIsLoading,
-  //   } = useApi('https://fhc-api.onrender.com/submissions?user=doc');
-  const {
-    data: qData,
-    error: qError,
-    isLoading: qIsLoading,
-  } = useApi(
-    startTest ? `https://fhc-api.onrender.com/questions?user=${user}` : ''
-  );
-  console.log('🚀 ~ App ~ isLoading:', qIsLoading);
-  console.log('🚀 ~ App ~ error:', qError);
-  console.log('🚀 ~ App ~ data:', qData);
+  const [qData, setQData] = useState<null | QuestionList>(null);
+  const [qError, setQError] = useState(false);
+  const [qIsLoading, setQIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (startTest && user) {
+      const fetchData = async () => {
+        // Clear the console of any previous errors
+        console.clear;
+        // Set loading to true and error to false for a clean slate
+        setQIsLoading(true);
+        setQError(false);
+        try {
+          const response = await axios.get(
+            `https://fhc-api.onrender.com/questions?user=${user}`
+          );
+          setQData(response.data);
+        } catch (error) {
+          setQError(true);
+          console.error(
+            error instanceof Error
+              ? error
+              : new Error('An unknown error occurred')
+          );
+        } finally {
+          setQIsLoading(false);
+        }
+      };
+      fetchData();
+    }
+  }, [startTest, user]);
 
   const cards = [
     {
@@ -55,7 +72,7 @@ function App() {
   ];
 
   return (
-    <main>
+    <main className="px-56">
       <Header
         heading="Career path test"
         subheading="Discover careers that match your skills and personality"
@@ -72,26 +89,36 @@ function App() {
           and how to get started.
         </p>
       </section>
-      <section>
-        {startTest ? (
-          <Questions loading={qIsLoading} />
-        ) : (
-          <>
-            <h2 id="start-test-heading">Ready to take the test?</h2>
-            <Button
-              onClick={() => {
-                setStartTest(true);
-                setUser('Tom_Bombadil');
-              }}
-              aria-describedby="start-test-heading"
-              aria-label="Start the career path assessment test"
-              size="lg"
-            >
-              Start Test
-            </Button>
-          </>
-        )}
-      </section>
+      {!qError ? (
+        <section>
+          {startTest ? (
+            <Questionaire
+              questions={qData as QuestionList}
+              loading={qIsLoading}
+              user={user}
+            />
+          ) : (
+            <>
+              <h2 id="start-test-heading">Ready to take the test?</h2>
+              <Button
+                onClick={() => {
+                  setStartTest(true);
+                  setUser('Tom_Bombadil');
+                }}
+                aria-describedby="start-test-heading"
+                aria-label="Start the career path assessment test"
+                size="lg"
+              >
+                Start Test
+              </Button>
+            </>
+          )}
+        </section>
+      ) : (
+        <section>
+          <h3>Unable to get questions. Please try again later.</h3>
+        </section>
+      )}
     </main>
   );
 }

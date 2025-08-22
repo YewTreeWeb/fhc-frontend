@@ -7,16 +7,14 @@ interface Props {
   gap?: string;
 }
 
-const CardWrapper = ({
-  cards,
-  className = '',
-  gap = 'gap-4',
-  ...props
-}: Props) => {
+const CardWrapper = ({ cards, className = '', ...props }: Props) => {
   return (
-    <section className={`grid ${gap} ${className}`.trim()} {...props}>
-      {cards.map((card) => (
-        <Card {...card} />
+    <section
+      className={`flex flex-row flex-wrap items-center justify-center py-[3.1875rem] gap-x-14 px-6 ${className}`.trim()}
+      {...props}
+    >
+      {cards.map((card, i) => (
+        <Card key={i} {...card} />
       ))}
     </section>
   );
