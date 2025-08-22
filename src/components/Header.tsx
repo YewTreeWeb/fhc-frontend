@@ -1,15 +1,11 @@
 import type { ComponentProps } from 'react';
 import type { JSX } from 'react/jsx-runtime';
-
-interface HeaderImage {
-  src: string;
-  alt: string;
-}
+import type { Image } from '../types';
 
 interface HeaderProps extends ComponentProps<'header'> {
   heading: string;
   subheading?: string;
-  img?: HeaderImage;
+  img?: Image;
   level?: 1 | 2 | 3 | 4 | 5 | 6;
 }
 
