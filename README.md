@@ -1,10 +1,10 @@
-# FHC Frontend - Career Assessment Questionnaire
+# FHC Frontend - Career Path Test
 
 A technical task for Bright Network front-end engineer role. The project was to create career path test page that allowed users to select answers to the questions to a questionaire. All the questions were fetched from the provided endpoints and once all questions answered the user can press a finished button to submit all answers via a POST request. I deliberately kept dependencies **minimal** to demonstrate raw coding ability within a tight timeframe, focusing on **functionality, accessibility, and code quality** rather than heavy third-party tooling.
 
 In a real production environment, I would:
 
-- Add **state management** (e.g. Zustand or React Context) for scalability.
+- Add **state management** Zustand for scalability.
 - Expand **accessibility** (full keyboard support, ARIA refinements, reduced-motion support) I believe implementing a strong WCAG standard is crucial for keeping users on a site and making it as inclusive as possible. .
 - Implement **robust error handling** (retries, offline storage, user-facing feedback).
 - Introduce **comprehensive testing** (unit, integration, accessibility, end-to-end).
@@ -36,7 +36,7 @@ In a real work setting, I'd happily adjust my approach depending on priorities a
 ## ✨ Key Design Decisions
 
 - **Minimal dependencies**: No slider/animation libraries (e.g. Motion.js _- used to be Framer Motion_) to highlight core engineering skills under time constraints.
-- **Tailwind CSS v4**: Chosen for rapid iteration and to align with Bright Network’s migration from Bootstrap to Tailwind.
+- **Tailwind CSS v4**: Chosen for rapid iteration and to align with Bright Network's migration from Bootstrap to Tailwind.
 - **Accessibility first**:
   - High-contrast **orange** radio inputs for improved visibility for users with colour-vision deficiencies.
   - Planned **reduced-motion** support for users with vestibular disorders.
@@ -74,7 +74,7 @@ Planned for a production build:
   - Minimise re-renders with `React.memo` and stable props.
   - Image optimisation (modern formats and compression) in the pipeline.
 - **Error handling**: User-friendly error states, retry strategies, and offline fallbacks for intermittent connectivity.
-- **SWR**: Automatically caches responses, so repeated requests for the same data don’t hit the server unless needed. This improves performance and reduces server load.
+- **SWR**: Automatically caches responses, so repeated requests for the same data don't hit the server unless needed. This improves performance and reduces server load.
 
 ---
 
@@ -243,12 +243,12 @@ I always prefer to use **pnpm** over npm. Here's why I always recommend pnpm:
 
 #### Performance Comparison
 
-| Metric           | npm      | pnpm            | Improvement |
-| ---------------- | -------- | --------------- | ----------- |
-| Install Speed    | Baseline | **2-3x faster** | 🚀          |
-| Disk Space       | Baseline | **50-70% less** | 💾          |
-| Cache Efficiency | Good     | **Excellent**   | ⚡          |
-| Monorepo Support | Basic    | **Advanced**    | 🏗️          |
+| Metric           | npm      | pnpm            |
+| ---------------- | -------- | --------------- |
+| Install Speed    | Baseline | **2-3x faster** |
+| Disk Space       | Baseline | **50-70% less** |
+| Cache Efficiency | Good     | **Excellent**   |
+| Monorepo Support | Basic    | **Advanced**    |
 
 #### Key Differences
 
