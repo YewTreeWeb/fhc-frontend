@@ -1,4 +1,4 @@
-# FHC Frontend - Career Path Test
+# Bright Network - Career Path Test
 
 A technical task for Bright Network front-end engineer role. The project was to create career path test page that allowed users to select answers to the questions to a questionaire. All the questions were fetched from the provided endpoints and once all questions answered the user can press a finished button to submit all answers via a POST request. I deliberately kept dependencies **minimal** to demonstrate raw coding ability within a tight timeframe, focusing on **functionality, accessibility, and code quality** rather than heavy third-party tooling.
 
