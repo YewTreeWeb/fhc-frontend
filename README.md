@@ -23,7 +23,11 @@ To demonstrate what I would also add to the project if I was making this in prod
 - **Time taken:** 4 hours (current implementation and not including write-up)
 - **Production estimate:** ~2 days to deliver a production-ready version (tests, accessibility review, error handling, and UX polish)
 
-As show I did go slightly over the three hours because I want to focused on code quality, accessibility, and documenting production-ready improvements like Motion.js.
+The task suggested around 3 hours, but I ended up spending just over 4. I wanted to make sure things not only worked but also looked good as they could be in the time I had and also felt easy to use. I naturally like to add that extra bit of polish because I care about the overall experience.
+
+To stay within reason, I decided not to include the unfinished card section I was working on, and I focused instead on fixing the scroll snapping so the flow felt smooth. I also chose to leave out keyboard navigation for the question navigation this time, since I didn't want to stretch the time further.
+
+In a real work setting, I'd happily adjust my approach depending on priorities and deadlines, but for this challenge I thought it was worth putting in the extra time to polish the core experience.
 
 # Overall Summary
 
