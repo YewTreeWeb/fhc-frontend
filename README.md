@@ -10,6 +10,7 @@ In a real production environment, I would:
 - Introduce **comprehensive testing** (unit, integration, accessibility, end-to-end).
 - Improve **UX polish** (micro-interactions, production-grade animations, internationalisation).
 - Add **Motion.js** for better user experience by providing smoother and more fluid animations
+- Replace Axios with **SWR** for caches responses and better performance
 
 For the radio inputs I decided to use the orange colour instead of the blue as per the design because this gives a better contrast for users who have colour blindness or suffer with their sight. I would also like to add more animations to give a smooth more production look. However, I would also add reduce motion values so that the users can toggle animations. This is especially needed for users who experience extreme motion sickness.
 
